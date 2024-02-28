@@ -12,7 +12,7 @@ def inputF():
             arrivalTimes,burstTimes=map(int,(arrivalTimes,burstTimes))
             temp=[processIds,arrivalTimes,burstTimes]
             timingInputs.append(temp)
-    timingInputs=sorted(timingInputs,key=lambda x:x[1])
+    timingInputs=sorted(timingInputs,key=lambda x:x[2])
     sys.stdin=original_stdin
     return numProcess,timingInputs
 
