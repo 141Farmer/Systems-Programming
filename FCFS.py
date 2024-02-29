@@ -34,6 +34,15 @@ def timings(numProcess,timingsInputs):
         totalWait+=waitingTimes[i]
         totalTurn+=turnTimes[i]
 
+    print("Gantt Chart:")
+    timeline=""
+    for i in range(numProcess):
+        timeline+="|"
+        timeline+=" "*(startTimes[i]-len(timeline))  
+        timeline+=(timingsInputs[i][0]+' ')*(completeTimes[i]-startTimes[i])  # Process ID
+    timeline+="|"
+    print(timeline)
+
     for i in range(numProcess):
         print('Process:',timingsInputs[i][0],',starting time:',startTimes[i],',completion time:',completeTimes[i],',waiting time:',waitingTimes[i],',turn around time:',turnTimes[i])
     print('Average waiting time:',totalWait/numProcess,'Average turn around time:',totalTurn/numProcess)
