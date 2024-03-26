@@ -4,7 +4,7 @@ import sys
 def inputF():
     original_stdin=sys.stdin
     timingInputs=[]
-    with open(Path(__file__,).resolve().parent/'non-Priority-Process-Scheduling-Input.txt','r') as f:
+    with open('non-Priority-Process-Scheduling-Input.txt','r') as f:
         sys.stdin=f
         numProcess=int(input())
         for i in range(numProcess):
