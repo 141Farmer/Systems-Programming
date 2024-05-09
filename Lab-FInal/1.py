@@ -1,10 +1,10 @@
 import threading
 import time
 
-num_slices = 0
-mutex = threading.Lock()
-pizza = threading.Semaphore(0)
-deliver = threading.Semaphore(1)
+num_slices=0
+mutex=threading.Lock()
+pizza=threading.Semaphore(0)
+deliver=threading.Semaphore(1)
 
 def student_thread(student_id):
     global num_slices
@@ -55,7 +55,8 @@ for i in range(num_students):
 delivery_thread=threading.Thread(target=delivery_thread)
 delivery_thread.start()
 
-# Join threads
-for t in student_threads:
+
+'''for t in student_threads:
     t.join()
 delivery_thread.join()
+'''
