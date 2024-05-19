@@ -68,7 +68,8 @@ void *delivery_thread(void *arg)
     return NULL;
 }
 
-int main() {
+int main() 
+{
     pthread_t students[NUM_STUDENTS];
     pthread_t delivery;
     int student_ids[NUM_STUDENTS];

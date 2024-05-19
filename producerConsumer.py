@@ -1,43 +1,40 @@
-mutex=1
-full=0
-empty=5
-item=0
+from threading import Thread,Semaphore,Lock
+from time import sleep
+
+mutex=Lock()
+empty=Semaphore(5)
+full=Semaphore(1)
+num_items=0
+max_num_items=5
+max_num_consumers=8
 
 def producer():
-    global mutex,full,empty,item
-    mutex-=1
-    full+=1
-    empty-=1
-    item+=1
-    print(f'Produced item {item}')
-    mutex+=1
-
-def consumer():
-    global mutex,full,empty,item
-    mutex-=1
-    full-=1
-    empty+=1
-    print(f'Consumed item {item}')
-    item-=1
-    mutex+=1
+    global num_items
+    while True:
+        empty.acquire()
+        mutex.acquire()
+        num_items+=1
+        print(f'Produced item {num_items}')
+        mutex.release()
+        full.release()
+        sleep(1)
+        
+def consumer(consumer_num):
+    global num_items
+    while True:
+        full.acquire()
+        mutex.acquire()
+        print(f'Consumer {consumer_num} consumed item {num_items}')
+        num_items-=1
+        mutex.release()
+        empty.release()
+        sleep(1)
 
 def main():
-    print('P. Produce\nC. Consume\nE. Exit')
-    while True:
-        print('Option')
-        n=input()
-        if n=='P':
-            if mutex==1 and empty!=0:
-                producer()
-            else:
-                print('Buffer is full')
-        elif n=='C':
-            if mutex==1 and full!=0:
-                consumer()
-            else:
-                print('Buffer is empty')
-        else:
-            return 
-        
+    for i in range(max_num_items):
+        Thread(target=producer).start()
+    for i in range(max_num_consumers):
+        Thread(target=consumer,args=(i+1,)).start()
+
 if __name__=='__main__':
     main()

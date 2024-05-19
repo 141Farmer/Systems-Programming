@@ -2,6 +2,8 @@ import threading
 import time
 
 num_slices=0
+num_students=10
+max_num_slices=8
 mutex=threading.Lock()
 pizza=threading.Semaphore(0)
 deliver=threading.Semaphore(1)
@@ -35,7 +37,7 @@ def delivery_thread():
         deliver.acquire()  
         mutex.acquire()
         if num_slices==0:
-            num_slices+=8  
+            num_slices+=max_num_slices
             print(f"Pizza delivered. Slices left: {num_slices}")
             mutex.release()
             for _ in range(num_students):  
@@ -44,7 +46,7 @@ def delivery_thread():
             mutex.release()
 
 
-num_students=10
+
 
 student_threads=[]
 for i in range(num_students):
